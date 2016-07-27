@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+
+
+  post 'users/create' => 'users#create'
+  get  'users/show'  => 'users#show'
+  post 'password_reset/create' => 'password_reset#create'
+  get  'password_reset/:key/edit'  => 'password_reset#edit', :constraints => { :email => /[^\/]+/ }
+  patch  'password_reset/:key' => 'password_reset#update'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
