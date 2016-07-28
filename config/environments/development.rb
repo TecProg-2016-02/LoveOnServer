@@ -36,6 +36,23 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
+  # Default Mailer Host
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+    # Configurações de email para o gmail
+    :address        => 'smtp.gmail.com',
+    :domain         => 'quantovale.com',
+    :port           => 587,
+    :user_name      => 'quantovaleplay@gmail.com',
+    :password       => 'qtovaleplay2016',
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
+  # Send email in development mode?
+  config.action_mailer.perform_deliveries = true
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end

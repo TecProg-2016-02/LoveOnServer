@@ -27,6 +27,11 @@ class User < ActiveRecord::Base
     email
   end
 
+  def email_activate
+    self.email_confirmed = true
+    self.confirm_token = nil
+    save!(:validate => false)
+  end
 # Gerador de chaves
   def generate_key(column)
     begin

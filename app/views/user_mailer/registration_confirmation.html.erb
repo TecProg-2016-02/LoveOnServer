@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <!-- Corpo do email enviado -->
+  <body>
+    <p>Olá <%= @user.name %>,</p>
+    <p>
+      A sua chave para ativar sua conta é:
+    </p>
+    <%= @user.confirm_token %>
+  </body>
+</html>
