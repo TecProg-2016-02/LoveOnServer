@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   post 'users/confirm_email' => 'users#confirm_email'
   get  'users/login/:email'  => 'sessions#create', :constraints => { :email => /[^\/]+/ }
   post 'users/login/:email'  => 'sessions#create', :constraints => { :email => /[^\/]+/ }
+  post 'users/interact' => 'interactions#create'
+  get 'users/all' => 'users#all'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

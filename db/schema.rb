@@ -11,7 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160727012926) do
+ActiveRecord::Schema.define(version: 20160728222133) do
+
+  create_table "interactions", force: :cascade do |t|
+    t.integer  "user_one_id"
+    t.integer  "user_two_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "interactions", ["user_one_id"], name: "index_interactions_on_user_one_id"
+  add_index "interactions", ["user_two_id"], name: "index_interactions_on_user_two_id"
+
+  create_table "matches", force: :cascade do |t|
+    t.integer  "user_one_id"
+    t.integer  "user_two_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "matches", ["user_one_id"], name: "index_matches_on_user_one_id"
+  add_index "matches", ["user_two_id"], name: "index_matches_on_user_two_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

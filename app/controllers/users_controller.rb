@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-skip_before_filter :verify_authenticity_token, :only => [:update]
+  skip_before_filter :verify_authenticity_token, :only => [:update]
 
   def create
     @user = User.new(user_params)
@@ -11,7 +11,12 @@ skip_before_filter :verify_authenticity_token, :only => [:update]
   end
 
   def show
-    render :json => @user.to_json(:include => :companies )
+    render :json => @user
+  end
+
+  def all
+    users = User.all
+    render :json => users
   end
 
   def confirm_email
