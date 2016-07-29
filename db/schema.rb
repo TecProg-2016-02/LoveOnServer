@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20160728222133) do
   create_table "interactions", force: :cascade do |t|
     t.integer  "user_one_id"
     t.integer  "user_two_id"
+    t.boolean  "like"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
