@@ -14,10 +14,9 @@ class Interaction < ActiveRecord::Base
 
   def check_match
     i = Interaction.where(user_one: self.user_two, user_two:self.user_one)
-    puts i
-    count = 0
     unless i.empty?
       if i.first.like && self.like
+        self.matched = true
         Match.create(user_one_id: self.user_one.id, user_two_id: self.user_two.id)
       end
     end

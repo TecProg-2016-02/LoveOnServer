@@ -50,6 +50,20 @@ class User < ActiveRecord::Base
     end while User.exists?(column => self[column])
   end
 
+  def matches
+    i = Match.where(user_one: self.id) + Match.where(user_two: self.id)
+
+    u = Array.new
+    i.each { |e|
+      if(e.user_one.id != self.id)
+        u << e.user_one
+      elsif (e.user_two.id != self.id)
+        u << e.user_two
+      end
+    }
+    u
+  end
+
 # Envia o email e salva o momento q foi enviado
   def send_password_reset
     generate_key(:password_reset_key)
