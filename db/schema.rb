@@ -45,6 +45,11 @@ ActiveRecord::Schema.define(version: 20160728222133) do
     t.string   "confirm_token"
     t.string   "password_reset_key"
     t.datetime "password_reset_sent_at"
+    t.string   "gender"
+    t.date     "birthday"
+    t.string   "description"
+    t.text     "avatar"
+    t.text     "gallery"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end

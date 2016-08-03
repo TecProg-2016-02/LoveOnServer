@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   post 'users/login/:email'  => 'sessions#create', :constraints => { :email => /[^\/]+/ }
   post 'users/interact' => 'interactions#create'
   get 'users/all' => 'users#all'
+  post 'users/all' => 'users#all'
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

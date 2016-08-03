@@ -15,7 +15,20 @@ class UsersController < ApplicationController
   end
 
   def all
-    users = User.all
+    users = Array.new
+    if(params[:male]=="true")
+      u = User.where(:gender => "Masculino")
+      u.each { |e|
+        users << e
+      }
+    end
+    if(params[:female]=="true")
+      t = User.where(:gender => "Feminino")
+      t.each { |e|
+        users << e
+      }
+    end
+
     render :json => users
   end
 
@@ -35,7 +48,7 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name , :email, :id_facebook, :password,
-      :password_confirmation)
+      :password_confirmation, :gender, :gallery, :avatar, :description)
   end
 
 end

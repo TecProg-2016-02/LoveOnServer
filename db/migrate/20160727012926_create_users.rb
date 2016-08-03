@@ -10,6 +10,11 @@ class CreateUsers < ActiveRecord::Migration
       t.string :confirm_token
       t.string :password_reset_key
       t.datetime :password_reset_sent_at
+      t.string :gender
+      t.date :birthday
+      t.string :description
+      t.text :avatar
+      t.text :gallery, array: true
       t.timestamps null: false
     end
   end
