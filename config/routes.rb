@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   post 'company/checkin' => 'checkin#create'
   patch 'users/update' => 'users#update'
   get  'locations/'  => 'locations#index'
+  get  'locations/show'  => 'locations#show'
+  post 'locations/checkin' => 'checkin#create'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

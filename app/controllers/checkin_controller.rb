@@ -2,20 +2,20 @@ class CheckinController < ApplicationController
 
   def create
     @current_user = User.find_by_token(params[:user_token])
-    @favorite = Favorite.new(favorite_params)
-    @favorite.user = @current_user
-    @current_user.update_attributes(favorite_params[:user_attributes])
-    @location = Location.find_by_token(params[:company_token])
-    @favorite.company = @company
-    if @favorite.save
-      render json: @favorite
+    @checkin = Checkin.new(checkin_params)
+    @checkin.user = @current_user
+    @current_user.update_attributes(checkin_params[:user_attributes])
+    @location = Location.find_by_id(params[:location_id])
+    @checkin.location = @company
+    if @checkin.save
+      render json: @checkin
     end
   end
 
   private
 
-  def favorite_params
-    params.require(:favorite).permit(:id, :rate, user_attributes: [:id, :name])
+  def checkin_params
+    params.require(:checkin).permit(:id, :rate, user_attributes: [:id, :name])
   end
 
 end
