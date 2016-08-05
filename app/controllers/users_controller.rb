@@ -41,6 +41,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    user = User.find_by_email(params[:email])
+    if user
+      if user.update(user_params)
+        render json: user
+        puts 'Score atualizado'
+      else
+        render json: { error: 'Incorrect credentials' }, status: 401
+      end
+    end
+  end
+
   private
   def set_user
     @user = User.find_by_token(params[:token])
