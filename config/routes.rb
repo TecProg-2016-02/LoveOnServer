@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post 'users/interact' => 'interactions#create'
   get 'users/all' => 'users#all'
   post 'users/all' => 'users#all'
+  patch 'users/update' => 'users#update'
 
 
 
