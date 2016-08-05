@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160728222133) do
+ActiveRecord::Schema.define(version: 20160805035712) do
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "company_id"
+  end
+
+  add_index "favorites", ["company_id"], name: "index_favorites_on_company_id"
+  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
 
   create_table "interactions", force: :cascade do |t|
     t.integer  "user_one_id"
@@ -24,6 +32,13 @@ ActiveRecord::Schema.define(version: 20160728222133) do
 
   add_index "interactions", ["user_one_id"], name: "index_interactions_on_user_one_id"
   add_index "interactions", ["user_two_id"], name: "index_interactions_on_user_two_id"
+
+  create_table "locations", force: :cascade do |t|
+    t.text     "image"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "matches", force: :cascade do |t|
     t.integer  "user_one_id"

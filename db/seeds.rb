@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Checkin.delete_all
+
+Checkin.create(:name => 'teste1')
+Checkin.create(:name => 'teste2')

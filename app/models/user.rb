@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-  attr_accessible :password, :email, :name, :id_facebook, :gender
+  attr_accessible :password, :email, :name, :id_facebook, :gender, :birthday
+  has_many :checkins
+  has_many :locations, through: :checkins
 
   has_many :interactions_one, class_name: "Interaction", foreign_key: :user_one_id, dependent: :destroy
   has_many :interactions_two, class_name: "Interaction", foreign_key: :user_two_id, dependent: :destroy
