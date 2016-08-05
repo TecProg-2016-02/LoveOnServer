@@ -14,6 +14,7 @@ class CreateUsers < ActiveRecord::Migration
       t.date :birthday
       t.string :description
       t.text :avatar
+      t.boolean :status
       t.text :gallery, array: true
       t.timestamps null: false
     end

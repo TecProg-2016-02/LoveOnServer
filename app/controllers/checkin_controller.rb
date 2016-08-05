@@ -6,7 +6,7 @@ class CheckinController < ApplicationController
     @checkin.user = @current_user
     @current_user.update_attributes(checkin_params[:user_attributes])
     @location = Location.find_by_id(params[:location_id])
-    @checkin.location = @company
+    @checkin.location = @location
     if @checkin.save
       render json: @checkin
     end

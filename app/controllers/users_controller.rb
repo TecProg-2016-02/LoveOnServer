@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       UserMailer.registration_confirmation(@user).deliver_now
-      render json: @user
+      render json: @user.to_json(:include => :locations )
     end
   end
 
@@ -50,6 +50,14 @@ class UsersController < ApplicationController
       else
         render json: { error: 'Incorrect credentials' }, status: 401
       end
+    end
+  end
+
+  def change_status
+    if @user.status==true
+      @user.stay_offline
+    else
+      @user.stay_online
     end
   end
 

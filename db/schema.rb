@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20160805035712) do
     t.date     "birthday"
     t.string   "description"
     t.text     "avatar"
+    t.boolean  "status"
     t.text     "gallery"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false

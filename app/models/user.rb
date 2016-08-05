@@ -69,6 +69,14 @@ class User < ActiveRecord::Base
     u
   end
 
+  def stay_online
+    self.online = true
+  end
+
+  def stay_offline
+    self.online = false
+  end
+
 # Envia o email e salva o momento q foi enviado
   def send_password_reset
     generate_key(:password_reset_key)
