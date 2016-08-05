@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   post 'users/all' => 'users#all'
   post 'company/checkin' => 'checkin#create'
   patch 'users/update' => 'users#update'
+  get  'locations/'  => 'locations#index'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -39,6 +39,9 @@ class User < ActiveRecord::Base
     self.confirm_token = nil
     save!(:validate => false)
   end
+  def age
+    (Date.today - self.birthday).to_i / 365
+  end
 # Gerador de chaves
   def generate_key(column)
     begin

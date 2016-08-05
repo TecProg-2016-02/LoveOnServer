@@ -13,13 +13,13 @@
 
 ActiveRecord::Schema.define(version: 20160805035712) do
 
-  create_table "favorites", force: :cascade do |t|
+  create_table "checkins", force: :cascade do |t|
     t.integer "user_id"
     t.integer "company_id"
   end
 
-  add_index "favorites", ["company_id"], name: "index_favorites_on_company_id"
-  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
+  add_index "checkins", ["company_id"], name: "index_checkins_on_company_id"
+  add_index "checkins", ["user_id"], name: "index_checkins_on_user_id"
 
   create_table "interactions", force: :cascade do |t|
     t.integer  "user_one_id"
