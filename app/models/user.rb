@@ -69,6 +69,20 @@ class User < ActiveRecord::Base
     u
   end
 
+  def matches_token
+    i = Match.where(user_one: self.id) + Match.where(user_two: self.id)
+
+    u = Array.new
+    i.each { |e|
+      if(e.user_one.id != self.id)
+        u << e
+      elsif (e.user_two.id != self.id)
+        u << e
+      end
+    }
+    u
+  end
+
   def stay_online
     self.online = true
   end
