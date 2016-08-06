@@ -17,19 +17,19 @@ class UsersController < ApplicationController
   def all
     users = Array.new
     if(params[:male]=="true")
-      u = User.where(:gender => "Masculino")
+      u = User.where(:gender => "male")
       u.each { |e|
         users << e
       }
     end
     if(params[:female]=="true")
-      t = User.where(:gender => "Feminino")
+      t = User.where(:gender => "female")
       t.each { |e|
         users << e
       }
     end
-
-    render :json => users
+    user = User.all
+    render :json => user
   end
 
   def confirm_email

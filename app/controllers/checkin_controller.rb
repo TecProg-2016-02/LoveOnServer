@@ -5,7 +5,7 @@ class CheckinController < ApplicationController
     @checkin = Checkin.new(checkin_params)
     @checkin.user = @current_user
     @current_user.update_attributes(checkin_params[:user_attributes])
-    @location = Location.find_by_id(params[:location_id])
+    @location = Location.find_by_id(params[:id])
     @checkin.location = @location
     if @checkin.save
       render json: @checkin
@@ -15,7 +15,7 @@ class CheckinController < ApplicationController
   private
 
   def checkin_params
-    params.require(:checkin).permit(:id, :rate, user_attributes: [:id, :name])
+    params.require(:checkin).permit(:id, user_attributes: [:id, :name])
   end
 
 end

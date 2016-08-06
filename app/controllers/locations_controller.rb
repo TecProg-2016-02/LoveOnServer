@@ -5,11 +5,12 @@ class LocationsController < ApplicationController
     render :json => @locations.to_json
   end
   def show
-    render :json => @location
+    @location = Location.find_by_name(params[:name])
+    render :json => @location.to_json(:include => :users)
   end
 
   private
     def set_company
-      @company = Location.find_by_name(params[:name])
+      @location = Location.find_by_name(params[:name])
     end
 end

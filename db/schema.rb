@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20160805035712) do
     t.integer  "user_two_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "token"
   end
 
   add_index "matches", ["user_one_id"], name: "index_matches_on_user_one_id"

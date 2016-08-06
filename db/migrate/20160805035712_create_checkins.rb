@@ -1,4 +1,4 @@
-class CreateCheckin < ActiveRecord::Migration
+class CreateCheckins < ActiveRecord::Migration
   def change
     create_table :checkins do |t|
       t.belongs_to :user, index: true
