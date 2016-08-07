@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  attr_accessible :password, :email, :name, :id_facebook, :gender, :birthday
+  attr_accessible :password, :email, :name, :id_facebook, :gender, :birthday,
+    :avatar, :description, :district, :city, :height, :width
   has_many :checkins
   has_many :locations, through: :checkins
 
@@ -14,6 +15,7 @@ class User < ActiveRecord::Base
   after_save { age }
   has_secure_password
 
+  serialize :gallery, Array
 
   validates   :password,
                 :on => :create,

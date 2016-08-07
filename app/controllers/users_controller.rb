@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = User.find_by_email(params[:email])
+    user = User.find_by_token(params[:token])
     if user
       if user.update(user_params)
         render json: user
@@ -71,4 +71,8 @@ class UsersController < ApplicationController
       :password_confirmation, :gender, :gallery, :avatar, :description, :birthday)
   end
 
+  def update_params
+    params.require(:user).permit(:name , :gender, :gallery, :avatar,
+    :description, :birthday, :district, :city, :height, :width)
+  end
 end
