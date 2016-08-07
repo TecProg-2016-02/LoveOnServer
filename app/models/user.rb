@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
 
   before_create { generate_token(:token) }
   before_create { generate_key (:confirm_token) }
+  after_save { age }
   has_secure_password
 
 
@@ -39,8 +40,9 @@ class User < ActiveRecord::Base
     self.confirm_token = nil
     save!(:validate => false)
   end
+
   def age
-    (Date.today - self.birthday).to_i / 365
+    self.age = (Date.today - self.birthday).to_i / 365
   end
 # Gerador de chaves
   def generate_key(column)
@@ -53,6 +55,10 @@ class User < ActiveRecord::Base
     begin
       self[column] = SecureRandom.urlsafe_base64
     end while User.exists?(column => self[column])
+  end
+
+  def last_place
+    self.locations.last
   end
 
   def matches
@@ -84,11 +90,11 @@ class User < ActiveRecord::Base
   end
 
   def stay_online
-    self.online = true
+    self.status = true
   end
 
   def stay_offline
-    self.online = false
+    self.status = false
   end
 
 # Envia o email e salva o momento q foi enviado

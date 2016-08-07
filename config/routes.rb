@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   post 'users/confirm_email' => 'users#confirm_email'
   get  'users/login/:email'  => 'sessions#create', :constraints => { :email => /[^\/]+/ }
   post 'users/login/:email'  => 'sessions#create', :constraints => { :email => /[^\/]+/ }
+  get  'users/logout'  => 'sessions#destroy', :constraints => { :email => /[^\/]+/ }
+  post 'users/logout'  => 'sessions#destroy', :constraints => { :email => /[^\/]+/ }
   post 'users/interact' => 'interactions#create'
   get 'users/all' => 'users#all'
   post 'users/all' => 'users#all'

@@ -65,10 +65,15 @@ ActiveRecord::Schema.define(version: 20160805035712) do
     t.date     "birthday"
     t.string   "description"
     t.text     "avatar"
-    t.boolean  "status"
+    t.boolean  "status",                 default: false
+    t.integer  "age"
+    t.float    "weight"
+    t.float    "height"
+    t.string   "city"
+    t.string   "district"
     t.text     "gallery"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
 end
