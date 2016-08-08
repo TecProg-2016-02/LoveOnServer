@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
 
-  post 'users/create' => 'users#create'
+  # post 'users/create' => 'users#create'
+  match 'users/create',  to: 'users#create', via: :post
   get  'users/show'  => 'users#show'
   post 'password_reset/create' => 'password_reset#create'
   get  'password_reset/:key/edit'  => 'password_reset#edit', :constraints => { :email => /[^\/]+/ }

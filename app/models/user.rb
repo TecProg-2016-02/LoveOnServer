@@ -44,7 +44,9 @@ class User < ActiveRecord::Base
   end
 
   def age
-    self.age = (Date.today - self.birthday).to_i / 365
+    if self.birthday
+      self.age = (Date.today - self.birthday).to_i / 365
+    end
   end
 # Gerador de chaves
   def generate_key(column)
