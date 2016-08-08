@@ -68,11 +68,11 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name , :email, :id_facebook, :password,
-      :password_confirmation, :gender, :gallery, :avatar, :description, :birthday)
+      :password_confirmation, :gender, :avatar, :description, :birthday,:gallery => [])
   end
 
   def update_params
-    params.require(:user).permit(:name , :gender, :gallery, :avatar,
-    :description, :birthday, :district, :city, :height, :width)
+    params.require(:user).permit(:name , :gender, :avatar, :description,
+    :birthday, :district, :city, :height, :width,:gallery => [])
   end
 end
