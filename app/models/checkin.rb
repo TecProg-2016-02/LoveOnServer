@@ -8,13 +8,12 @@ class Checkin < ActiveRecord::Base
   validate :checkin_once
 
   def checkin_once
-    u = Checkin.all
+    u = Checkin.where(:user_id=>self.user_id)
     u.each {|e|
       if self.user_id == e.user_id && self.location_id == e.location_id
-        if e.updated_at > (DateTime.current - 30.minutes)
-          errors.add(:user_id, "Não é possivel fazer checkin, aguarde o tempo necessario")
-        end
         e.delete
+      elsif e.created_at > (DateTime.current - 30.minutes)
+        errors.add(:user_id, "Não é possivel fazer checkin, aguarde o tempo necessario")
       end
     }
   end
