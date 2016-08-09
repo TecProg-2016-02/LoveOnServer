@@ -22,6 +22,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :district
       t.boolean :search_male
       t.boolean :search_female
+      t.integer :search_range
       t.text :gallery, array: true
       t.timestamps null: false
     end
