@@ -1,17 +1,17 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  skip_before_filter :verify_authenticity_token, :only => [:update]
+  # skip_before_filter :verify_authenticity_token, :only => [:update]
 
   def create
-    @user = User.new(user_params)
-    if @user.save
-      UserMailer.registration_confirmation(@user).deliver_now
-      render json: @user.to_json(:include => :locations )
+    user = User.new(user_params)
+    if user.save
+      UserMailer.registration_confirmation(user).deliver_now
+      render json: user
     end
   end
 
   def show
-    render :json => @user
+    render :json => user
   end
 
   def all
@@ -46,7 +46,6 @@ class UsersController < ApplicationController
     if user
       if user.update(user_params)
         render json: user
-        puts 'Score atualizado'
       else
         render json: { error: 'Incorrect credentials' }, status: 401
       end
@@ -54,16 +53,16 @@ class UsersController < ApplicationController
   end
 
   def change_status
-    if @user.status==true
-      @user.stay_offline
+    if user.status==true
+      user.stay_offline
     else
-      @user.stay_online
+      user.stay_online
     end
   end
 
   private
   def set_user
-    @user = User.find_by_token(params[:token])
+    user = User.find_by_token(params[:token])
   end
 
   def user_params

@@ -1,13 +1,13 @@
 class CheckinController < ApplicationController
 
   def create
-    @current_user = User.find_by_token(params[:user_token])
-    @checkin = Checkin.create
-    @checkin.user = @current_user
-    @location = Location.find_by_token(params[:location_token])
-    @checkin.location = @location
-    if @checkin.save
-      render json: @checkin
+    current_user = User.find_by_token(params[:user_token])
+    checkin = Checkin.create
+    checkin.user = current_user
+    location = Location.find_by_token(params[:location_token])
+    checkin.location = location
+    if checkin.save
+      render json: checkin
     end
   end
 
