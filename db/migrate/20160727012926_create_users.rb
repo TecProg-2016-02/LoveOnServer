@@ -20,6 +20,8 @@ class CreateUsers < ActiveRecord::Migration
       t.float :height
       t.string :city
       t.string :district
+      t.boolean :search_male
+      t.boolean :search_female
       t.text :gallery, array: true
       t.timestamps null: false
     end

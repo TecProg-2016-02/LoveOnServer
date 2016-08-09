@@ -71,6 +71,8 @@ ActiveRecord::Schema.define(version: 20160805035712) do
     t.float    "height"
     t.string   "city"
     t.string   "district"
+    t.boolean  "search_male"
+    t.boolean  "search_female"
     t.text     "gallery"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
