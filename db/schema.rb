@@ -14,8 +14,10 @@
 ActiveRecord::Schema.define(version: 20160805035712) do
 
   create_table "checkins", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "location_id"
+    t.integer  "user_id"
+    t.integer  "location_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "checkins", ["location_id"], name: "index_checkins_on_location_id"
@@ -36,6 +38,7 @@ ActiveRecord::Schema.define(version: 20160805035712) do
   create_table "locations", force: :cascade do |t|
     t.text     "image"
     t.string   "name"
+    t.string   "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
