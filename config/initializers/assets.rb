@@ -2,7 +2,9 @@
 
 # Version of your assets, change this if you want to expire all your assets.
 Rails.application.config.assets.version = '1.0'
-
+if defined?(WEBrick::HTTPRequest)
+  WEBrick::HTTPRequest.const_set("MAX_URI_LENGTH", 100240)
+end
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path
 
