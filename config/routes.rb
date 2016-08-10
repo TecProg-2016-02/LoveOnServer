@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   get  'locations/'  => 'locations#index'
   get  'locations/show'  => 'locations#show'
   post 'locations/checkin' => 'checkin#create'
+  post 'users/follow' => 'relationships#create'
+  post 'users/unfollow' => 'relationships#destroy'
+  get  'users/show'  => 'users#show'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

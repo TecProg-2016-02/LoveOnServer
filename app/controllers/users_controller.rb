@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    user = User.find_by_token(params[:token])
     render :json => user
   end
 
@@ -67,7 +68,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name , :email, :id_facebook, :password,
-      :password_confirmation, :gender, :avatar, :description, :birthday,:gallery => [])
+      :password_confirmation, :gender, :avatar, :description,
+      :birthday, :district, :city, :height, :width, :search_male, :search_female,
+      :gallery => [])
   end
 
   def update_params
