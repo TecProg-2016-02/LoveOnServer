@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   post 'company/checkin' => 'checkin#create'
   patch 'users/update' => 'users#update'
   get  'locations/'  => 'locations#index'
-  get  'locations/show'  => 'locations#show'
+  post  'locations/show'  => 'locations#show'
   post 'locations/checkin' => 'checkin#create'
   post 'users/follow' => 'relationships#create'
   post 'users/unfollow' => 'relationships#destroy'
