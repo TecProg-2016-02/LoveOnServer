@@ -30,8 +30,7 @@ class User < ActiveRecord::Base
   validates   :password,
                 :on => :create,
                 length:{
-                    minimum: 6,
-                    maximum: 20
+                    minimum: 6
                 },
                 presence: true
 
