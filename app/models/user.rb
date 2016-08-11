@@ -118,10 +118,12 @@ class User < ActiveRecord::Base
 
   def stay_online
     self.status = true
+    save!(:validate => false)
   end
 
   def stay_offline
     self.status = false
+    save!(:validate => false)
   end
 
 # Envia o email e salva o momento q foi enviado
