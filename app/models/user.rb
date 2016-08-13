@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
     :avatar, :description, :district, :city, :height, :width, :gallery,
     :search_male, :search_female
 
-  serialize :gallery, Array
+  # serialize :gallery, Array
   has_many :checkins
   has_many :locations, through: :checkins
   has_many :interactions_one, class_name: "Interaction", foreign_key: :user_one_id, dependent: :destroy

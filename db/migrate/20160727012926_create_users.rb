@@ -23,7 +23,7 @@ class CreateUsers < ActiveRecord::Migration
       t.boolean :search_male
       t.boolean :search_female
       t.integer :search_range
-      t.binary :gallery, array: true
+      t.text :gallery, array: true, default: []
       t.timestamps null: false
     end
   end

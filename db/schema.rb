@@ -88,9 +88,9 @@ ActiveRecord::Schema.define(version: 20160810024710) do
     t.boolean  "search_male"
     t.boolean  "search_female"
     t.integer  "search_range"
-    t.binary   "gallery"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.text     "gallery",                default: "--- []\n"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
 end

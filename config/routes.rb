@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get 'users/all' => 'users#all'
   post 'users/all' => 'users#all'
   post 'company/checkin' => 'checkin#create'
-  patch 'users/update' => 'users#update'
+  post 'users/update' => 'users#update'
   get  'locations/'  => 'locations#index'
   post  'locations/show'  => 'locations#show'
   post 'locations/checkin' => 'checkin#create'
