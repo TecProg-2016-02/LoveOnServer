@@ -74,8 +74,8 @@ class UsersController < ApplicationController
   end
 
   def update_params
-    params.require(:user).permit(:name , :gender, :avatar, :description,
+    params.require(:user).permit(:name , :gender, :avatar, :description, :background,
     :birthday, :district, :city, :height, :weight, :search_male, :search_female,
-    :gallery => [],:background,)
+    :gallery => [])
   end
 end
