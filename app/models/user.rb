@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   attr_accessible :password, :email, :name, :id_facebook, :gender, :birthday,
-    :avatar, :description, :district, :city, :height, :width, :gallery,
-    :search_male, :search_female
+    :avatar, :description, :district, :city, :height, :weight, :gallery,
+    :search_male, :search_female, :background
 
   # serialize :gallery, Array
   has_many :checkins
