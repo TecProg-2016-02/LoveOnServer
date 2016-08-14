@@ -13,8 +13,6 @@ Rails.application.routes.draw do
   get  'users/logout'  => 'sessions#destroy', :constraints => { :email => /[^\/]+/ }
   post 'users/logout'  => 'sessions#destroy', :constraints => { :email => /[^\/]+/ }
   post 'users/interact' => 'interactions#create'
-  get 'users/all' => 'users#all'
-  post 'users/all' => 'users#all'
   post 'company/checkin' => 'checkin#create'
   post 'users/update' => 'users#update'
   get  'locations/'  => 'locations#index'

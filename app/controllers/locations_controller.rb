@@ -6,14 +6,19 @@ class LocationsController < ApplicationController
   end
 
   def show
-    location = Location.find_by_token(params[:token])
     user = User.find_by_token(params[:user_token])
     if user.search_male==true && user.search_female==false
-      render :json => location, :methods => [:male_users]
+      location = Location.joins(:users).where('users.gender = ?', 'male')
+        .where("users.age <= ?", user.search_range).where(token: params[:token])
+      render :json => location.first, :include => [:users]
     elsif user.search_male==false && user.search_female==true
-      render :json => location, :methods => [:female_users]
+      location = Location.joins(:users).where('users.gender = ?', 'female')
+        .where("users.age <= ?", user.search_range).where(token: params[:token])
+      render :json => location.first, :include => [:users]
     else
-      render :json => location, :include => [:users]
+      location = Location.joins(:users)
+        .where("users.age <= ?", user.search_range).where(token: params[:token])
+      render :json => location.first, :include => [:users]
     end
   end
 

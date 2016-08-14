@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
+    user.age
     if user.save
       render json: user
     end
@@ -11,24 +12,6 @@ class UsersController < ApplicationController
 
   def show
     user = User.find_by_token(params[:token])
-    render :json => user
-  end
-
-  def all
-    users = Array.new
-    if(params[:male]=="true")
-      u = User.where(:gender => "male")
-      u.each { |e|
-        users << e
-      }
-    end
-    if(params[:female]=="true")
-      t = User.where(:gender => "female")
-      t.each { |e|
-        users << e
-      }
-    end
-    user = User.all
     render :json => user
   end
 
@@ -44,6 +27,7 @@ class UsersController < ApplicationController
   def update
     user = User.find_by_token(params[:token])
     if user
+      user.age
       if user.update(user_params)
         user.email_activate
         render json: user
@@ -70,12 +54,12 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name , :email, :id_facebook, :password,
       :password_confirmation, :gender, :avatar, :description, :background,
       :birthday, :district, :city, :height, :weight, :search_male, :search_female,
-      :gallery => [])
+      :search_range, :gallery => [])
   end
 
   def update_params
     params.require(:user).permit(:name , :gender, :avatar, :description, :background,
     :birthday, :district, :city, :height, :weight, :search_male, :search_female,
-    :gallery => [])
+    :search_range, :gallery => [])
   end
 end

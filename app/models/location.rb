@@ -9,11 +9,15 @@ class Location < ActiveRecord::Base
     end while User.exists?(column => self[column])
   end
 
-  def male_users
-    self.users.where(:gender => 'male')
+  def male_users(age)
+    self.users.where(:gender => 'male').where(["age <= ?", age])
   end
 
-  def female_users
-    self.users.where(:gender => 'female')
+  def female_users(age)
+    self.users.where(:gender => 'female').where(["age <= ?", age])
+  end
+
+  def all_users(age)
+    self.users.where(:gender => 'female').where(["age <= ?", age])
   end
 end
