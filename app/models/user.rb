@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
 
 
   validates   :password,
-                :on => :create
+                :on => :create,
                 presence: true
 
   validates   :email,
