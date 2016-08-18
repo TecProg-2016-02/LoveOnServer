@@ -28,10 +28,7 @@ class User < ActiveRecord::Base
 
 
   validates   :password,
-                :on => :create,
-                length:{
-                    minimum: 6
-                },
+                :on => :create
                 presence: true
 
   validates   :email,
