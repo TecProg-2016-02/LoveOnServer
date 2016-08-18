@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160813235559) do
+ActiveRecord::Schema.define(version: 20160818002103) do
 
   create_table "checkins", force: :cascade do |t|
     t.integer  "user_id"
@@ -41,6 +41,9 @@ ActiveRecord::Schema.define(version: 20160813235559) do
     t.string   "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float    "latitude"
+    t.float    "longitude"
+    t.float    "distance"
   end
 
   create_table "matches", force: :cascade do |t|
