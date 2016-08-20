@@ -4,9 +4,10 @@ class User < ActiveRecord::Base
     :search_male, :search_female, :background, :search_range
 
   # serialize :gallery, Array
-  has_many :checkins
-  has_many :locations, through: :checkins
-  has_many :places, foreign_key: "user_id", class_name: "Place"
+  has_one :checkin
+  has_one :location, through: :checkin
+  has_many :places, -> { order 'updated_at DESC' }
+  has_many :locations, through: :places
 
   has_many :interactions_one, class_name: "Interaction", foreign_key: :user_one_id, dependent: :destroy
   has_many :interactions_two, class_name: "Interaction", foreign_key: :user_two_id, dependent: :destroy
