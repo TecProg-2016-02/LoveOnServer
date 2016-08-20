@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
   def show
     user = User.find_by_token(params[:token])
-    render :json => user
+    render :json => user, :include =>[:locations, :location, :followers, :following]
   end
 
   def confirm_email
