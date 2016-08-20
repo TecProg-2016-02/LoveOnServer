@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   # serialize :gallery, Array
   has_many :checkins
   has_many :locations, through: :checkins
+  has_many :places, foreign_key: "user_id", class_name: "Place"
+
   has_many :interactions_one, class_name: "Interaction", foreign_key: :user_one_id, dependent: :destroy
   has_many :interactions_two, class_name: "Interaction", foreign_key: :user_two_id, dependent: :destroy
 
@@ -42,6 +44,7 @@ class User < ActiveRecord::Base
   def to_param
     email
   end
+
 
   def follow(other_user)
     active_relationships.create(followed_id: other_user.id)

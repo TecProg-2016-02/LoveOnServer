@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       cookies[:token] = user.token
       current_user = User.find_by_token!(cookies[:token]) if cookies[:token]
       current_user.stay_online
-      render :json => current_user, :include =>[:locations, :followers, :following], :methods => [:matches, :matches_token, :age, :last_place, :interactions_one]
+      render :json => current_user, :include =>[:locations, :places, :followers, :following], :methods => [:matches, :matches_token, :age, :last_place, :interactions_one]
     else
       render json: { error: 'Incorrect credentials' }, status: 401
     end
