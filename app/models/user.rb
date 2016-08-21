@@ -117,6 +117,18 @@ class User < ActiveRecord::Base
     u
   end
 
+  def matched?(user)
+    i = Match.where(user_one: self.id) + Match.where(user_two: self.id)
+    i.each { |e|
+      if(e.user_one.id == user.id)
+        return true
+      elsif (e.user_two.id == self.id)
+        return true
+      end
+    }
+    return false
+  end
+
   def stay_online
     self.status = true
     save!(:validate => false)

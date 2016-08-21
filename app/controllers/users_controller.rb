@@ -10,8 +10,14 @@ class UsersController < ApplicationController
   end
 
   def show
+    current_user = User.find_by_id_facebook(params[:id_facebook])
     user = User.find_by_token(params[:token])
-    render :json => user, :include =>[:locations, :location, :followers, :following]
+    is_following = current_user.following?(user)
+    matched = current_user.matched?(user)
+    render :json => {
+      :user => user,:locations => user.locations, 
+      :is_following => is_following, :matched => matched
+    }
   end
 
   def confirm_email
