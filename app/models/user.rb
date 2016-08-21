@@ -122,7 +122,7 @@ class User < ActiveRecord::Base
     i.each { |e|
       if(e.user_one.id == user.id)
         return true
-      elsif (e.user_two.id == self.id)
+      elsif (e.user_two.id == user.id)
         return true
       end
     }
