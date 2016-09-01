@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160820193914) do
+ActiveRecord::Schema.define(version: 20160831214415) do
+
+  create_table "blocks", force: :cascade do |t|
+    t.integer  "user_one_id"
+    t.integer  "user_two_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "blocks", ["user_one_id"], name: "index_blocks_on_user_one_id"
+  add_index "blocks", ["user_two_id"], name: "index_blocks_on_user_two_id"
 
   create_table "checkins", force: :cascade do |t|
     t.integer  "user_id"
