@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   post 'users/follow' => 'relationships#create'
   post 'users/unfollow' => 'relationships#destroy'
   post 'users/block' => 'blocks#create'
+  post 'users/unblock' => 'blocks#destroy'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

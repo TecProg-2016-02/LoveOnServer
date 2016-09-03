@@ -64,6 +64,42 @@ class User < ActiveRecord::Base
     following.include?(other_user)
   end
 
+  def user_follows
+    u = Array.new
+    following = self.following
+    blocks = Block.where(user_one: self.id) + Block.where(user_two: self.id)
+    following.each { |e|
+      if(!blocks.empty?)
+        blocks.each { |t|
+          if(e.id != t.user_one.id && e.id != t.user_two.id)
+              u << e
+          end
+        }
+      else
+        u << e
+      end
+    }
+    u
+  end
+
+  def follow_user
+    u = Array.new
+    followers = self.followers
+    blocks = Block.where(user_one: self.id) + Block.where(user_two: self.id)
+    followers.each { |e|
+      if(!blocks.empty?)
+        blocks.each { |t|
+          if(e.id != t.user_one.id && e.id != t.user_two.id)
+              u << e
+          end
+        }
+      else
+        u << e
+      end
+    }
+    u
+  end
+
   def email_activate
     self.email_confirmed = true
     self.confirm_token = nil
@@ -111,13 +147,27 @@ class User < ActiveRecord::Base
     blocks = Block.where(user_one: self.id) + Block.where(user_two: self.id)
     u = Array.new
     i.each { |e|
-      blocks.each { |t|
-        if(e.user_one.id != self.id && e.user_one.id != t.user_one.id)
+      if(e.user_one.id != self.id)
+        if(!blocks.empty?)
+          blocks.each { |t|
+            if(e.user_one.id != t.user_one.id &&e.user_one.id != t.user_two.id)
+              u << e.user_one
+            end
+          }
+        else
           u << e.user_one
-        elsif (e.user_two.id != self.id && e.user_two.id != t.user_two.id)
+        end
+      elsif (e.user_two.id != self.id)
+        if(!blocks.empty?)
+          blocks.each { |t|
+            if(e.user_two.id != t.user_one.id && e.user_one.id != t.user_two.id)
+              u << e.user_two
+            end
+          }
+        else
           u << e.user_two
         end
-      }
+      end
     }
     u
   end
@@ -127,13 +177,27 @@ class User < ActiveRecord::Base
     blocks = Block.where(user_one: self.id) + Block.where(user_two: self.id)
     u = Array.new
     i.each { |e|
-      blocks.each { |t|
-        if(e.user_one.id != self.id && e.user_one.id != t.user_one.id)
-          u << e
-        elsif (e.user_two.id != self.id && e.user_two.id != t.user_two.id)
+      if(e.user_one.id != self.id)
+        if(!blocks.empty?)
+          blocks.each { |t|
+            if(e.user_one.id != t.user_one.id &&e.user_one.id != t.user_two.id)
+              u << e
+            end
+          }
+        else
           u << e
         end
-      }
+      elsif (e.user_two.id != self.id)
+        if(!blocks.empty?)
+          blocks.each { |t|
+            if(e.user_two.id != t.user_one.id && e.user_one.id != t.user_two.id)
+              u << e
+            end
+          }
+        else
+          u << e
+        end
+      end
     }
     u
   end

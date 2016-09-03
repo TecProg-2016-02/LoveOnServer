@@ -9,7 +9,6 @@ class BlocksController < ApplicationController
   def destroy
     block = Block.where(:user_one_id =>params[:user_one_id],
       :user_two_id => params[:user_two_id]).first
-
     block.delete
   end
 end
