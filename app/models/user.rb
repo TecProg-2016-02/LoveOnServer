@@ -12,6 +12,9 @@ class User < ActiveRecord::Base
   has_many :interactions_one, class_name: "Interaction", foreign_key: :user_one_id, dependent: :destroy
   has_many :interactions_two, class_name: "Interaction", foreign_key: :user_two_id, dependent: :destroy
 
+  has_many :block_one, class_name: "Block", foreign_key: :user_one_id, dependent: :destroy
+  has_many :block_two, class_name: "Block", foreign_key: :user_two_id, dependent: :destroy
+
   has_many :matches_one, class_name: "Match", foreign_key: :user_one_id, dependent: :destroy
   has_many :matches_two, class_name: "Match", foreign_key: :user_two_id, dependent: :destroy
 
@@ -89,30 +92,48 @@ class User < ActiveRecord::Base
     self.locations.last
   end
 
-  def matches
-    i = Match.where(user_one: self.id) + Match.where(user_two: self.id)
+  def blocks
+    i = Block.where(user_one: self.id)
 
     u = Array.new
     i.each { |e|
-      if(e.user_one.id != self.id)
-        u << e.user_one
-      elsif (e.user_two.id != self.id)
-        u << e.user_two
-      end
+      u << e.user_two
+    }
+    u
+  end
+
+  def blocked?(other_user)
+    blocks.include?(other_user)
+  end
+
+  def matches
+    i = Match.where(user_one: self.id) + Match.where(user_two: self.id)
+    blocks = Block.where(user_one: self.id) + Block.where(user_two: self.id)
+    u = Array.new
+    i.each { |e|
+      blocks.each { |t|
+        if(e.user_one.id != self.id && e.user_one.id != t.user_one.id)
+          u << e.user_one
+        elsif (e.user_two.id != self.id && e.user_two.id != t.user_two.id)
+          u << e.user_two
+        end
+      }
     }
     u
   end
 
   def matches_token
     i = Match.where(user_one: self.id) + Match.where(user_two: self.id)
-
+    blocks = Block.where(user_one: self.id) + Block.where(user_two: self.id)
     u = Array.new
     i.each { |e|
-      if(e.user_one.id != self.id)
-        u << e
-      elsif (e.user_two.id != self.id)
-        u << e
-      end
+      blocks.each { |t|
+        if(e.user_one.id != self.id && e.user_one.id != t.user_one.id)
+          u << e
+        elsif (e.user_two.id != self.id && e.user_two.id != t.user_two.id)
+          u << e
+        end
+      }
     }
     u
   end

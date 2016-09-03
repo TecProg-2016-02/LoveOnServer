@@ -14,9 +14,12 @@ class UsersController < ApplicationController
     user = User.find_by_token(params[:token])
     is_following = current_user.following?(user)
     matched = current_user.matched?(user)
+    blocked = current_user.blocked?(user)
+
     render :json => {
-      :user => user,:locations => user.locations, 
-      :is_following => is_following, :matched => matched
+      :user => user,:locations => user.locations,
+      :is_following => is_following, :matched => matched,
+      :blocked => blocked
     }
   end
 
