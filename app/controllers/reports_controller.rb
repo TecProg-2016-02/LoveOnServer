@@ -5,7 +5,7 @@ class ReportsController < ApplicationController
       :reported_id => params[:reported_id], :comment => params[:comment])
 
     if report.save
-      render json: block
+      render json: report
     end
   end
 

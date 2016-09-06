@@ -16,13 +16,14 @@ Rails.application.routes.draw do
   post 'company/checkin' => 'checkin#create'
   post 'users/update' => 'users#update'
   get  'locations/'  => 'locations#index'
-  post  'locations/show'  => 'locations#show'
+  get  'locations/all' => 'locations#all'
+  post 'locations/show'  => 'locations#show'
   post 'locations/checkin' => 'checkin#create'
   post 'users/follow' => 'relationships#create'
   post 'users/unfollow' => 'relationships#destroy'
   post 'users/block' => 'blocks#create'
   post 'users/unblock' => 'blocks#destroy'
-
+  post 'users/report' => 'reports#create'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

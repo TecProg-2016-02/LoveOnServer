@@ -18,12 +18,16 @@ class User < ActiveRecord::Base
   has_many :matches_one, class_name: "Match", foreign_key: :user_one_id, dependent: :destroy
   has_many :matches_two, class_name: "Match", foreign_key: :user_two_id, dependent: :destroy
 
+  has_many :reporter, class_name: "Report", foreign_key: :reporter_id, dependent: :destroy
+  has_many :reported, class_name: "Report", foreign_key: :reported_id, dependent: :destroy
+
   has_many :active_relationships,  class_name:  "Relationship",
                                    foreign_key: "follower_id",
                                    dependent:   :destroy
   has_many :passive_relationships, class_name:  "Relationship",
                                    foreign_key: "followed_id",
                                    dependent:   :destroy
+
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
@@ -231,4 +235,8 @@ class User < ActiveRecord::Base
     UserMailer.password_reset(self).deliver_now
   end
 
+  def block_account
+    self.account_blocked = true
+    save!(:validate => false)
+  end
 end

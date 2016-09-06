@@ -19,4 +19,13 @@ class Report < ActiveRecord::Base
     end
   end
 
+  def check_maximum_reports
+    i = Report.where(reported:self.reported)
+    unless i.empty?
+      if i.length >= 5
+        self.reported.block_account
+      end
+    end
+  end
+
 end
