@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160831214415) do
+ActiveRecord::Schema.define(version: 20160904213951) do
 
   create_table "blocks", force: :cascade do |t|
     t.integer  "user_one_id"
@@ -87,6 +87,17 @@ ActiveRecord::Schema.define(version: 20160831214415) do
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id"
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id"
+
+  create_table "reports", force: :cascade do |t|
+    t.string   "comment"
+    t.integer  "reporter_id"
+    t.integer  "reported_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "reports", ["reported_id"], name: "index_reports_on_reported_id"
+  add_index "reports", ["reporter_id"], name: "index_reports_on_reporter_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

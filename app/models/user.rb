@@ -29,9 +29,8 @@ class User < ActiveRecord::Base
 
   before_create { generate_token(:token) }
   before_create { generate_key (:confirm_token) }
-  after_save { age }
   has_secure_password
-
+  has_many :reports
 
   validates   :password,
                 :on => :create,
