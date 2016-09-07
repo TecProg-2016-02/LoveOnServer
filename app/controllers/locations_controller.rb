@@ -7,6 +7,11 @@ class LocationsController < ApplicationController
     render :json => locations
   end
 
+  def index
+    locations = Location.all
+    render :json => locations
+  end
+
   def show
     user = User.find_by_token(params[:user_token])
     blocked_ids = Array.new

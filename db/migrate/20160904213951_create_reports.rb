@@ -7,7 +7,7 @@ class CreateReports < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_foreign_key :blocks, :users, column: :reporter_id
-    add_foreign_key :blocks, :users, column: :reported_id
+    add_foreign_key :reports, :users, column: :reporter_id
+    add_foreign_key :reports, :users, column: :reported_id
   end
 end
