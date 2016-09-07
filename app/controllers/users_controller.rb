@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    current_user = User.find_by_id_facebook(params[:id_facebook])
+    current_user = User.find_by_token(params[:current_user_token])
     user = User.find_by_token(params[:token])
     is_following = current_user.following?(user)
     matched = current_user.matched?(user)
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name , :email, :id_facebook, :password,
+    params.require(:user).permit(:name , :email, :password,
       :password_confirmation, :gender, :avatar, :description, :background,
       :birthday, :district, :city, :height, :weight, :search_male, :search_female,
       :search_range, :gallery => [])

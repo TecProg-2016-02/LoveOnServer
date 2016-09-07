@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :password, :email, :name, :id_facebook, :gender, :birthday,
+  attr_accessible :password, :email, :name, :gender, :birthday,
     :avatar, :description, :district, :city, :height, :weight, :gallery,
     :search_male, :search_female, :background, :search_range
 
