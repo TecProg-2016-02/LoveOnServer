@@ -38,6 +38,7 @@ class UsersController < ApplicationController
     user = User.find_by_token(params[:token])
     if user
       user.age
+      user.gallery_will_change!
       if user.update(user_params)
         user.email_activate
         render json: user
