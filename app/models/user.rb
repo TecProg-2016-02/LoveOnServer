@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
     :avatar, :description, :district, :city, :height, :weight, :gallery,
     :search_male, :search_female, :background, :search_range
 
-  # serialize :gallery, Array
+  serialize :gallery
   has_one :checkin
   has_one :location, through: :checkin
   has_many :places, -> { order 'updated_at DESC' }
