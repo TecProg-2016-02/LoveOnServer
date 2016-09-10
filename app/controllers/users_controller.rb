@@ -39,7 +39,7 @@ class UsersController < ApplicationController
     if user
       user.age
       user.gallery_will_change!
-      if user.update(user_params)
+      if user.update(update_params)
         user.email_activate
         render json: user
       else
@@ -65,12 +65,12 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name , :email, :password,
       :password_confirmation, :gender, :avatar, :description, :background,
       :birthday, :district, :city, :height, :weight, :search_male, :search_female,
-      :search_range, :gallery => [])
+      :search_range, :id_social, :gallery => [])
   end
 
   def update_params
     params.require(:user).permit(:name , :gender, :avatar, :description, :background,
     :birthday, :district, :city, :height, :weight, :search_male, :search_female,
-    :search_range, :gallery => [])
+    :search_range, :id_social, :gallery => [])
   end
 end

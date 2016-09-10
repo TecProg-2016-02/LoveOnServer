@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   attr_accessible :password, :email, :name, :gender, :birthday,
     :avatar, :description, :district, :city, :height, :weight, :gallery,
-    :search_male, :search_female, :background, :search_range
+    :search_male, :search_female, :background, :search_range, :id_social
 
   serialize :gallery
   has_one :checkin
@@ -42,7 +42,6 @@ class User < ActiveRecord::Base
 
   validates   :email,
               :on => :create,
-              presence: true,
               uniqueness: true,
               format: {
                 with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i

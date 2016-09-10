@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20160906145704) do
     t.string   "name"
     t.string   "email"
     t.string   "token"
+    t.string   "id_social"
     t.string   "password_digest"
     t.boolean  "email_confirmed"
     t.string   "confirm_token"

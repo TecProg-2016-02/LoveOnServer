@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   patch  'password_reset/:key' => 'password_reset#update'
   get 'users/confirm_email' => 'users#confirm_email'
   post 'users/confirm_email' => 'users#confirm_email'
-  get  'users/login/:email'  => 'sessions#create', :constraints => { :email => /[^\/]+/ }
-  post 'users/login/:email'  => 'sessions#create', :constraints => { :email => /[^\/]+/ }
+  get  'users/login'  => 'sessions#create', :constraints => { :email => /[^\/]+/ }
+  # post 'users/login'  => 'sessions#create', :constraints => { :email => /[^\/]+/ }
   get  'users/logout'  => 'sessions#destroy', :constraints => { :email => /[^\/]+/ }
   post 'users/logout'  => 'sessions#destroy', :constraints => { :email => /[^\/]+/ }
   post 'users/interact' => 'interactions#create'
