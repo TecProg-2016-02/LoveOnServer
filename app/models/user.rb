@@ -40,9 +40,12 @@ class User < ActiveRecord::Base
                 :on => :create,
                 presence: true
 
+  validates   :id_social,
+              :on => :create,
+              uniqueness: true
+
   validates   :email,
               :on => :create,
-              uniqueness: true,
               format: {
                 with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
               }
