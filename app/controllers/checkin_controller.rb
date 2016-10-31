@@ -9,15 +9,13 @@ class CheckinController < ApplicationController
     location = Location.find_by_token(params[:location_token])
     place.location = location
     checkin.location = location
+
+    # after the user have a checkin in a place,the information will be saved, if isn't saved will return nothing to the user
     if checkin.save && place.save
       render json: checkin
+    else
+      render :nothing
     end
+
   end
-
-  # private
-  #
-  # def checkin_params
-  #   params.require(:checkin).permit(:id, user_attributes: [:id, :name])
-  # end
-
 end
