@@ -70,39 +70,39 @@ class User < ActiveRecord::Base
   end
 
   def user_follows
-    u = Array.new
+    followeds_array = Array.new
     following = self.following
     blocks = Block.where(user_one: self.id) + Block.where(user_two: self.id)
-    following.each { |e|
+    following.each { |followed|
       if(!blocks.empty?)
-        blocks.each { |t|
-          if(e.id != t.user_one.id && e.id != t.user_two.id)
-              u << e
+        blocks.each { |blocked_user|
+          if(followed.id != blocked_user.user_one.id && followed.id != blocked_user.user_two.id)
+              followeds_array << followed
           end
         }
       else
-        u << e
+        followeds_array << followed
       end
     }
-    u
+    followeds_array
   end
 
   def follow_user
-    u = Array.new
+    followers_array = Array.new
     followers = self.followers
     blocks = Block.where(user_one: self.id) + Block.where(user_two: self.id)
-    followers.each { |e|
+    followers.each { |follower|
       if(!blocks.empty?)
-        blocks.each { |t|
-          if(e.id != t.user_one.id && e.id != t.user_two.id)
-              u << e
+        blocks.each { |blocked_user|
+          if(follower.id != blocked_user.user_one.id && follower.id != blocked_user.user_two.id)
+              followers_array << follower
           end
         }
       else
-        u << e
+        followers_array << follower
       end
     }
-    u
+    followers_array
   end
 
   def email_activate
@@ -134,13 +134,13 @@ class User < ActiveRecord::Base
   end
 
   def blocks
-    i = Block.where(user_one: self.id)
+    blocked_users = Block.where(user_one: self.id)
 
-    u = Array.new
-    i.each { |e|
-      u << e.user_two
+    blocked_array = Array.new
+    blocked_users.each { |blocked|
+      blocked_array << blocked.user_two
     }
-    u
+    blocked_array
   end
 
   def blocked?(other_user)
@@ -148,71 +148,71 @@ class User < ActiveRecord::Base
   end
 
   def matches
-    i = Match.where(user_one: self.id) + Match.where(user_two: self.id)
+    matches = Match.where(user_one: self.id) + Match.where(user_two: self.id)
     blocks = Block.where(user_one: self.id) + Block.where(user_two: self.id)
-    u = Array.new
-    i.each { |e|
-      if(e.user_one.id != self.id)
+    matches_array = Array.new
+    matches.each { |match|
+      if(match.user_one.id != self.id)
         if(!blocks.empty?)
-          blocks.each { |t|
-            if(e.user_one.id != t.user_one.id &&e.user_one.id != t.user_two.id)
-              u << e.user_one
+          blocks.each { |block|
+            if(match.user_one.id != block.user_one.id &&match.user_one.id != block.user_two.id)
+              matches_array << match.user_one
             end
           }
         else
-          u << e.user_one
+          matches_array << match.user_one
         end
-      elsif (e.user_two.id != self.id)
+      elsif (match.user_two.id != self.id)
         if(!blocks.empty?)
-          blocks.each { |t|
-            if(e.user_two.id != t.user_one.id && e.user_one.id != t.user_two.id)
-              u << e.user_two
+          blocks.each { |block|
+            if(match.user_two.id != block.user_one.id && match.user_one.id != block.user_two.id)
+              matches_array << match.user_two
             end
           }
         else
-          u << e.user_two
+          matches_array << match.user_two
         end
       end
     }
-    u
+    matches_array
   end
 
   def matches_token
-    i = Match.where(user_one: self.id) + Match.where(user_two: self.id)
+    matches = Match.where(user_one: self.id) + Match.where(user_two: self.id)
     blocks = Block.where(user_one: self.id) + Block.where(user_two: self.id)
-    u = Array.new
-    i.each { |e|
-      if(e.user_one.id != self.id)
+    matches_token_array = Array.new
+    matches.each { |match|
+      if(match.user_one.id != self.id)
         if(!blocks.empty?)
-          blocks.each { |t|
-            if(e.user_one.id != t.user_one.id &&e.user_one.id != t.user_two.id)
-              u << e
+          blocks.each { |block|
+            if(match.user_one.id != block.user_one.id &&match.user_one.id != block.user_two.id)
+              matches_token_array << match
             end
           }
         else
-          u << e
+          matches_token_array << match
         end
-      elsif (e.user_two.id != self.id)
+      elsif (match.user_two.id != self.id)
         if(!blocks.empty?)
-          blocks.each { |t|
-            if(e.user_two.id != t.user_one.id && e.user_one.id != t.user_two.id)
-              u << e
+          blocks.each { |block|
+            if(match.user_two.id != block.user_one.id && match.user_one.id != block.user_two.id)
+              matches_token_array << match.user_two
             end
           }
         else
-          u << e
+          matches_token_array << match
         end
       end
     }
-    u
+    matches_token_array
   end
 
   def matched?(user)
-    i = Match.where(user_one: self.id) + Match.where(user_two: self.id)
-    i.each { |e|
-      if(e.user_one.id == user.id)
+    matches = Match.where(user_one: self.id) + Match.where(user_two: self.id)
+    matches.each { |match|
+      if(match.user_one.id == user.id)
         return true
-      elsif (e.user_two.id == user.id)
+      elsif (match.user_two.id == user.id)
         return true
       end
     }
