@@ -5,7 +5,11 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by_id_social(params[:id_social])
+    if (params[:id_social] == null || params[:password] == null) {
+      render json: { error: 'Null user input'}, status: 401
+    } else {
+      user = User.find_by_id_social(params[:id_social])
+    }
     if user.authenticate(params[:password])
       blocked_ids = Array.new
       user.block_one.each { |t|
@@ -26,8 +30,12 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    user = User.find_by_email(params[:email])
-    cookies.delete(:token)
+    if (params[:email] == null || params[:token] == null) {
+      render json: { error: 'Null email'}, status: 401
+    } else {
+      user = User.find_by_email(params[:email])
+      cookies.delete(:token)
+    }
     if user
       user.stay_offline
       render :json => user, :include =>[:locations], :methods => [:matches, :matches_token, :age, :last_place]

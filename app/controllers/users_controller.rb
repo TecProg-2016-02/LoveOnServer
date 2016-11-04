@@ -15,8 +15,13 @@ class UsersController < ApplicationController
 
   # this part will show the user informations, like who is following, who gave match, etc
   def show
-    current_user = User.find_by_token(params[:current_user_token])
-    user = User.find_by_token(params[:token])
+    if (params[:current_user_token] == null || params[:token] == null) {
+      render json: { error: 'Null current user or token'}, status: 401
+    } else {
+      current_user = User.find_by_token(params[:current_user_token])
+      user = User.find_by_token(params[:token])
+    }
+
     is_following = current_user.following?(user)
     matched = current_user.matched?(user)
     blocked = current_user.blocked?(user)
@@ -30,7 +35,11 @@ class UsersController < ApplicationController
 
   # this part of code will confirm the user email
   def confirm_email
-    user = User.find_by_confirm_token(params[:confirm_token])
+    if (params[:confirm_token] == null) {
+      render json: { error: 'Null confirm token'}, status: 401
+    } else {
+      user = User.find_by_confirm_token(params[:confirm_token])
+    }
     # if the email is valid, the user will receive notifications of the app, if the email isn't valid will show the error to the user
     if user
       user.email_activate
@@ -41,7 +50,11 @@ class UsersController < ApplicationController
 
   # this bloc of code will apdate all the date of the user
   def update
-    user = User.find_by_token(params[:token])
+    if (params[:token] == null) {
+      render json: { error: 'Null token in update'}, status: 401
+    } else {
+      user = User.find_by_token(params[:token])
+    }
     if user
       user.age
       user.gallery_will_change!
@@ -69,7 +82,11 @@ class UsersController < ApplicationController
   private
   # will attribute the informations for the user
   def set_user
-    user = User.find_by_token(params[:token])
+    if (params[:token] == null) {
+      render json: { error: 'Null token in set user'}, status: 401
+    } else {
+      user = User.find_by_token(params[:token])
+    }
   end
 
   # the app require these informations for the user to register in the app
