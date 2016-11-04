@@ -8,10 +8,10 @@ class Checkin < ActiveRecord::Base
   validate :checkin_once
 
   def checkin_once
-    u = Checkin.where(:user_id=>self.user_id)
-    u.each {|e|
-      if self.user_id == e.user_id
-        e.delete
+    user_checkins = Checkin.where(:user_id=>self.user_id)
+    user_checkins.each {|checkin|
+      if self.user_id == checkin.user_id
+        checkin.delete
       end
     }
   end

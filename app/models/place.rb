@@ -10,10 +10,10 @@ class Place < ActiveRecord::Base
   validate :not_repeated
 
   def not_repeated
-    u = Place.where(:location_id=>self.location_id)
-    u.each {|e|
-      if self.location_id == e.location_id
-        e.delete
+    places = Place.where(:location_id=>self.location_id)
+    places.each {|place|
+      if self.location_id == place.location_id
+        place.delete
       end
     }
   end
