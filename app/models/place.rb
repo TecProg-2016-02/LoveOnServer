@@ -9,6 +9,8 @@ class Place < ActiveRecord::Base
 
   validate :not_repeated
 
+  private
+
   def not_repeated
     places = Place.where(:location_id=>self.location_id)
     places.each {|place|

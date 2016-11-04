@@ -5,6 +5,8 @@ class Block < ActiveRecord::Base
   validates :user_one_id, uniqueness: {scope: :user_two_id, message: "cant block the same user twice"}
   validate :cant_block_myself
 
+  private
+
   def cant_block_myself
     if self.user_one.id == self.user_two.id
       errors.add(:expiration_date, "can't block myself")

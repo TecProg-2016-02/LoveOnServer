@@ -7,6 +7,8 @@ class Checkin < ActiveRecord::Base
 
   validate :checkin_once
 
+  private
+
   def checkin_once
     user_checkins = Checkin.where(:user_id=>self.user_id)
     user_checkins.each {|checkin|
