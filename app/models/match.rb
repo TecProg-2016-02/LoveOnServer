@@ -5,17 +5,19 @@ class Match < ActiveRecord::Base
   validates :user_one_id, uniqueness: {scope: :user_two_id, message: "cant interact twice with the same user"}
   before_create { generate_token(:token) }
 
-  def generate_token(column)
-    begin
-      self[column] = SecureRandom.urlsafe_base64
-    end while User.exists?(column => self[column])
-  end
-
-  def get_user(id)
-    if self.user_one_id == id
-      return self.user_two
-    else
-      return self.user_one
+  private
+    def generate_token(column)
+      begin
+        self[column] = SecureRandom.urlsafe_base64
+      end while User.exists?(column => self[column])
     end
-  end
+
+  private
+    def get_user(id)
+      if self.user_one_id == id
+        return self.user_two
+      else
+        return self.user_one
+      end
+    end
 end
