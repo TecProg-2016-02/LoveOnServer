@@ -7,7 +7,9 @@ class LocationsController < ApplicationController
     # will capture the location
     origin = Geokit::LatLng.new(params[:latitude],params[:longitude])
     # 3.5 is the search distance
-    locations = Location.within(3.5, :origin => origin)
+    # locations = Location.within(3.5, :origin => origin)
+    locations = Location.all
+
     # will pass the information in json format
     render :json => locations
   end
@@ -37,11 +39,11 @@ class LocationsController < ApplicationController
       # will find in the chosen place the male gender
       location = Location.includes(:users).where('users.gender = ?', 'male')
         # will search the user by his age and tokens
-        .where("users.age <= ?", user.search_range).where(token: params[:token])
+        location.where("users.age <= ?", user.search_range).where(token: params[:token])
         # will consult the user on database
-        .where.not(users: { id: user.id })
+        location.where.not(users: { id: user.id })
         # will consult the blocked users on database
-        .where.not(users: { id: [blocked_ids]})
+        location.where.not(users: { id: [blocked_ids]})
       # will render the informations on json format
       render :json => location.first, :include => [:users]
 
@@ -50,11 +52,11 @@ class LocationsController < ApplicationController
       # will find in the chosen location the female gender
       location = Location.includes(:users).where('users.gender = ?', 'female')
         # search the user by his age and tokens
-        .where("users.age <= ?", user.search_range).where(token: params[:token])
+        location.where("users.age <= ?", user.search_range).where(token: params[:token])
         # will consult the users on database
-        .where.not(users: { id: user.id })
+        location.where.not(users: { id: user.id })
         # will consult the blocked users
-        .where.not(users: { id: [blocked_ids]})
+        location.where.not(users: { id: [blocked_ids]})
       # will render the informations in json format
       render :json => location.first, :include => [:users]
 
@@ -62,11 +64,11 @@ class LocationsController < ApplicationController
       # will include the users in the locations
       location = Location.includes(:users)
         # will search user by age and tokens
-        .where("users.age <= ?", user.search_range).where(token: params[:token])
+        location.where("users.age <= ?", user.search_range).where(token: params[:token])
         # will consult the user
-        .where.not(users: { id: user.id })
+        location.where.not(users: { id: user.id })
         # will consult the blocked users
-        .where.not(users: { id: [blocked_ids]})
+        location.where.not(users: { id: [blocked_ids]})
       # will render the informations in json format
       render :json => location.first, :include => [:users]
     end

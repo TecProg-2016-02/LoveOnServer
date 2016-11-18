@@ -44,11 +44,11 @@ class User < ActiveRecord::Base
               :on => :create,
               uniqueness: true
 
-  validates   :email,
-              :on => :create,
-              format: {
-                with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-              }
+  # validates   :email,
+  #             :on => :create,
+  #             format: {
+  #               with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  #             }
 
   def to_param
     email

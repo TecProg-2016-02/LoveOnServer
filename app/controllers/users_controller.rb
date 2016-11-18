@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
   # this part will show the user informations, like who is following, who gave match, etc
   def show
-    if (params[:current_user_token] == null || params[:token] == null)
+    if (params[:current_user_token] == nil || params[:token] == nil)
       render json: { error: 'Null current user or token'}, status: 401
     else
       current_user = User.find_by_token(params[:current_user_token])
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
 
   # this part of code will confirm the user email
   def confirm_email
-    if (params[:confirm_token] == null)
+    if (params[:confirm_token] == nil)
       render json: { error: 'Null confirm token'}, status: 401
     else
       user = User.find_by_confirm_token(params[:confirm_token])
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
 
   # this bloc of code will apdate all the date of the user
   def update
-    if (params[:token] == null)
+    if (params[:token] == nil)
       render json: { error: 'Null token in update'}, status: 401
     else
       user = User.find_by_token(params[:token])
@@ -82,7 +82,7 @@ class UsersController < ApplicationController
   private
   # will attribute the informations for the user
   def set_user
-    if (params[:token] == null)
+    if (params[:token] == nil)
       render json: { error: 'Null token in set user'}, status: 401
     else
       user = User.find_by_token(params[:token])
