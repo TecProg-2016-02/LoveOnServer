@@ -1,3 +1,5 @@
+# This class will permit one user block another one
+
 class Block < ActiveRecord::Base
   belongs_to :user_one, class_name: 'User'
   belongs_to :user_two, class_name: 'User'
