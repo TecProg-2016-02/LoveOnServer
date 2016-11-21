@@ -1,3 +1,5 @@
+# This class will allow the user interact with another 
+
 class Interaction < ActiveRecord::Base
   belongs_to :user_one, class_name: 'User'
   belongs_to :user_two, class_name: 'User'
