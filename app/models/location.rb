@@ -1,3 +1,5 @@
+# This class will list the gender chosen by the locality
+
 class Location < ActiveRecord::Base
   has_many :checkins
   has_many :users, through: :checkins
