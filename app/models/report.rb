@@ -16,6 +16,8 @@ class Report < ActiveRecord::Base
   def cant_report_myself
     if self.reporter.id == self.reported.id
       errors.add(:expiration_date, "can't report myself")
+    else
+      
     end
   end
 

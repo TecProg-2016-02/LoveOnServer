@@ -78,6 +78,8 @@ class User < ActiveRecord::Base
         blocks.each { |blocked_user|
           if(followed.id != blocked_user.first_user_interaction.id && followed.id != blocked_user.user_two.id)
               followeds_array << followed
+          else
+
           end
         }
       else
@@ -96,6 +98,8 @@ class User < ActiveRecord::Base
         blocks.each { |blocked_user|
           if(follower.id != blocked_user.first_user_interaction.id && follower.id != blocked_user.user_two.id)
               followers_array << follower
+          else 
+
           end
         }
       else
@@ -114,6 +118,8 @@ class User < ActiveRecord::Base
   def age
     if self.birthday
       self.age = (Date.today - self.birthday).to_i / 365
+    else 
+
     end
   end
 # Gerador de chaves
@@ -157,6 +163,8 @@ class User < ActiveRecord::Base
           blocks.each { |block|
             if(match.first_user_interaction.id != block.first_user_interaction.id &&match.first_user_interaction.id != block.user_two.id)
               matches_array << match.first_user_interaction
+            else
+
             end
           }
         else
@@ -167,6 +175,8 @@ class User < ActiveRecord::Base
           blocks.each { |block|
             if(match.user_two.id != block.first_user_interaction.id && match.first_user_interaction.id != block.user_two.id)
               matches_array << match.user_two
+            else 
+
             end
           }
         else
@@ -187,6 +197,8 @@ class User < ActiveRecord::Base
           blocks.each { |block|
             if(match.first_user_interaction.id != block.first_user_interaction.id &&match.first_user_interaction.id != block.user_two.id)
               matches_token_array << match
+            else
+
             end
           }
         else
@@ -197,6 +209,8 @@ class User < ActiveRecord::Base
           blocks.each { |block|
             if(match.user_two.id != block.first_user_interaction.id && match.first_user_interaction.id != block.user_two.id)
               matches_token_array << match.user_two
+            else
+
             end
           }
         else
@@ -214,6 +228,8 @@ class User < ActiveRecord::Base
         return true
       elsif (match.user_two.id == user.id)
         return true
+      else
+        
       end
     }
     return false
