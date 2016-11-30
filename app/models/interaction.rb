@@ -8,6 +8,7 @@ class Interaction < ActiveRecord::Base
   validate :cant_interact_myself
   before_save :check_match
 
+# This block of code will not permit that you interact to youself
   private
     def cant_interact_myself
       if self.user_one.id == self.user_two.id
@@ -17,12 +18,14 @@ class Interaction < ActiveRecord::Base
       end
     end
 
+# This block of code will show any match you may have
   private
     def match
       user_match = Match.where(user_one_id: self.user_one.id, user_two_id: self.user_two.id)
       user_match.first
     end
 
+# This block of code will allow you to have a  view of your match
   private
     def check_match
       user_matched = Interaction.where(user_one: self.user_two, user_two:self.user_one)
