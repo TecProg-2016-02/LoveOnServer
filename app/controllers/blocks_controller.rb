@@ -6,6 +6,8 @@ class BlocksController < ApplicationController
       :user_two_id => params[:user_two_id])
     if block.save
       render json: block
+    else
+      
     end
   end
 

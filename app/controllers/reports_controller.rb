@@ -8,6 +8,8 @@ class ReportsController < ApplicationController
     # if the report is valid, it will be saved and render in json format
     if report.save
       render json: report
+    else
+     
     end
   end
 

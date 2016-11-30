@@ -8,6 +8,8 @@ class InteractionsController < ApplicationController
     if interaction.save
       # if the interaction was done correctly will send the information in json format 
       render json: interaction, :methods => [:match]
+    else
+      
     end
   end
 end
