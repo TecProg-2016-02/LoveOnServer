@@ -11,6 +11,7 @@ class Interaction < ActiveRecord::Base
 # This block of code will not permit that you interact to youself
   private
     def cant_interact_myself
+      # This rotine will check if the users are the same, if they are, the message that you can't interective with youself will apear, if you are not interective with youself nothing will apear
       if self.user_one.id == self.user_two.id
         errors.add(:expiration_date, "can't interact with myself")
       else
@@ -30,7 +31,8 @@ class Interaction < ActiveRecord::Base
     def check_match
       user_matched = Interaction.where(user_one: self.user_two, user_two:self.user_one)
       unless user_matched.empty?
-        if user_mathced.first.like && self.like
+        # This rotine will check your matches liked back
+        if user_matched.first.like && self.like
           self.matched = true
           Match.create(user_one_id: self.user_one.id, user_two_id: self.user_two.id)
         else
