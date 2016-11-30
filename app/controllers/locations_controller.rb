@@ -31,7 +31,7 @@ class LocationsController < ApplicationController
     # create an array for blocked people
     blocked_ids = Array.new
     # create an table of blocked users
-    user.block_one.each { |t|
+    user.who_blocks.each { |t|
       blocked_ids << t.user_two_id
     }
     # female gender

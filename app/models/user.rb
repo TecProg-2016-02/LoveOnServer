@@ -9,14 +9,14 @@ class User < ActiveRecord::Base
   has_many :places, -> { order 'updated_at DESC' }
   has_many :locations, through: :places
 
-  has_many :interactions_one, class_name: "Interaction", foreign_key: :user_one_id, dependent: :destroy
-  has_many :interactions_two, class_name: "Interaction", foreign_key: :user_two_id, dependent: :destroy
+  has_many :who_interacts, class_name: "Interaction", foreign_key: :user_one_id, dependent: :destroy
+  has_many :who_is_interacted, class_name: "Interaction", foreign_key: :user_two_id, dependent: :destroy
 
-  has_many :block_one, class_name: "Block", foreign_key: :user_one_id, dependent: :destroy
-  has_many :block_two, class_name: "Block", foreign_key: :user_two_id, dependent: :destroy
+  has_many :who_blocks, class_name: "Block", foreign_key: :user_one_id, dependent: :destroy
+  has_many :who_is_blocked, class_name: "Block", foreign_key: :user_two_id, dependent: :destroy
 
-  has_many :matches_one, class_name: "Match", foreign_key: :user_one_id, dependent: :destroy
-  has_many :matches_two, class_name: "Match", foreign_key: :user_two_id, dependent: :destroy
+  has_many :who_matches, class_name: "Match", foreign_key: :user_one_id, dependent: :destroy
+  has_many :who_is_matched, class_name: "Match", foreign_key: :user_two_id, dependent: :destroy
 
   has_many :reporter, class_name: "Report", foreign_key: :reporter_id, dependent: :destroy
   has_many :reported, class_name: "Report", foreign_key: :reported_id, dependent: :destroy
