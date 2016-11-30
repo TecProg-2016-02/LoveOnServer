@@ -16,6 +16,8 @@ class Place < ActiveRecord::Base
     places.each {|place|
       if self.location_id == place.location_id
         place.delete
+      else 
+        # do nothing
       end
     }
   end

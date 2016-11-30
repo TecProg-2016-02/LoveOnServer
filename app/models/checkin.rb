@@ -14,6 +14,8 @@ class Checkin < ActiveRecord::Base
     user_checkins.each {|checkin|
       if self.user_id == checkin.user_id
         checkin.delete
+      else
+        # do nothing
       end
     }
   end

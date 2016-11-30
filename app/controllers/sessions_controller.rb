@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     end
     if user.authenticate(params[:password])
       blocked_ids = Array.new
-      user.block_one.each { |t|
+      user.who_blocks.each { |t|
         blocked_ids << t.user_two_id
       }
       cookies[:token] = user.token

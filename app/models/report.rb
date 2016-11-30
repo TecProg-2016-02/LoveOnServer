@@ -21,7 +21,7 @@ class Report < ActiveRecord::Base
       errors.add(:expiration_date, "can't report myself")
     # Will render nothing if you dont fit on this
     else
-      render :nothing
+      # do nothing
     end
   end
 

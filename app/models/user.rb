@@ -9,14 +9,14 @@ class User < ActiveRecord::Base
   has_many :places, -> { order 'updated_at DESC' }
   has_many :locations, through: :places
 
-  has_many :interactions_one, class_name: "Interaction", foreign_key: :user_one_id, dependent: :destroy
-  has_many :interactions_two, class_name: "Interaction", foreign_key: :user_two_id, dependent: :destroy
+  has_many :who_interacts, class_name: "Interaction", foreign_key: :first_user_interaction_id, dependent: :destroy
+  has_many :who_is_interacted, class_name: "Interaction", foreign_key: :user_two_id, dependent: :destroy
 
-  has_many :block_one, class_name: "Block", foreign_key: :user_one_id, dependent: :destroy
-  has_many :block_two, class_name: "Block", foreign_key: :user_two_id, dependent: :destroy
+  has_many :who_blocks, class_name: "Block", foreign_key: :first_user_interaction_id, dependent: :destroy
+  has_many :who_is_blocked, class_name: "Block", foreign_key: :user_two_id, dependent: :destroy
 
-  has_many :matches_one, class_name: "Match", foreign_key: :user_one_id, dependent: :destroy
-  has_many :matches_two, class_name: "Match", foreign_key: :user_two_id, dependent: :destroy
+  has_many :who_matches, class_name: "Match", foreign_key: :first_user_interaction_id, dependent: :destroy
+  has_many :who_is_matched, class_name: "Match", foreign_key: :user_two_id, dependent: :destroy
 
   has_many :reporter, class_name: "Report", foreign_key: :reporter_id, dependent: :destroy
   has_many :reported, class_name: "Report", foreign_key: :reported_id, dependent: :destroy
@@ -55,29 +55,31 @@ class User < ActiveRecord::Base
   end
 
 
-  def follow(other_user)
-    active_relationships.create(followed_id: other_user.id)
+  def follow(user_followed)
+    active_relationships.create(followed_id: user_followed.id)
   end
 
   # Unfollows a user.
-  def unfollow(other_user)
-    active_relationships.find_by(followed_id: other_user.id).destroy
+  def unfollow(user_followed)
+    active_relationships.find_by(followed_id: user_followed.id).destroy
   end
 
   # Returns true if the current user is following the other user.
-  def following?(other_user)
-    following.include?(other_user)
+  def following?(follower_user)
+    following.include?(follower_user)
   end
 
   def user_follows
     followeds_array = Array.new
     following = self.following
-    blocks = Block.where(user_one: self.id) + Block.where(user_two: self.id)
+    blocks = Block.where(first_user_interaction: self.id) + Block.where(user_two: self.id)
     following.each { |followed|
       if(!blocks.empty?)
         blocks.each { |blocked_user|
-          if(followed.id != blocked_user.user_one.id && followed.id != blocked_user.user_two.id)
+          if(followed.id != blocked_user.first_user_interaction.id && followed.id != blocked_user.user_two.id)
               followeds_array << followed
+          else
+            # do nothing
           end
         }
       else
@@ -90,12 +92,14 @@ class User < ActiveRecord::Base
   def follow_user
     followers_array = Array.new
     followers = self.followers
-    blocks = Block.where(user_one: self.id) + Block.where(user_two: self.id)
+    blocks = Block.where(first_user_interaction: self.id) + Block.where(user_two: self.id)
     followers.each { |follower|
       if(!blocks.empty?)
         blocks.each { |blocked_user|
-          if(follower.id != blocked_user.user_one.id && follower.id != blocked_user.user_two.id)
+          if(follower.id != blocked_user.first_user_interaction.id && follower.id != blocked_user.user_two.id)
               followers_array << follower
+          else 
+            # do nothing
           end
         }
       else
@@ -114,6 +118,8 @@ class User < ActiveRecord::Base
   def age
     if self.birthday
       self.age = (Date.today - self.birthday).to_i / 365
+    else 
+      # do nothing
     end
   end
 # Gerador de chaves
@@ -134,7 +140,7 @@ class User < ActiveRecord::Base
   end
 
   def blocks
-    blocked_users = Block.where(user_one: self.id)
+    blocked_users = Block.where(first_user_interaction: self.id)
 
     blocked_array = Array.new
     blocked_users.each { |blocked|
@@ -143,30 +149,34 @@ class User < ActiveRecord::Base
     blocked_array
   end
 
-  def blocked?(other_user)
-    blocks.include?(other_user)
+  def blocked?(blocked_user)
+    blocks.include?(blocked_user)
   end
 
   def matches
-    matches = Match.where(user_one: self.id) + Match.where(user_two: self.id)
-    blocks = Block.where(user_one: self.id) + Block.where(user_two: self.id)
+    matches = Match.where(first_user_interaction: self.id) + Match.where(user_two: self.id)
+    blocks = Block.where(first_user_interaction: self.id) + Block.where(user_two: self.id)
     matches_array = Array.new
     matches.each { |match|
-      if(match.user_one.id != self.id)
+      if(match.first_user_interaction.id != self.id)
         if(!blocks.empty?)
           blocks.each { |block|
-            if(match.user_one.id != block.user_one.id &&match.user_one.id != block.user_two.id)
-              matches_array << match.user_one
+            if(match.first_user_interaction.id != block.first_user_interaction.id &&match.first_user_interaction.id != block.user_two.id)
+              matches_array << match.first_user_interaction
+            else
+              # do nothing
             end
           }
         else
-          matches_array << match.user_one
+          matches_array << match.first_user_interaction
         end
       elsif (match.user_two.id != self.id)
         if(!blocks.empty?)
           blocks.each { |block|
-            if(match.user_two.id != block.user_one.id && match.user_one.id != block.user_two.id)
+            if(match.user_two.id != block.first_user_interaction.id && match.first_user_interaction.id != block.user_two.id)
               matches_array << match.user_two
+            else 
+              # do nothing
             end
           }
         else
@@ -178,15 +188,17 @@ class User < ActiveRecord::Base
   end
 
   def matches_token
-    matches = Match.where(user_one: self.id) + Match.where(user_two: self.id)
-    blocks = Block.where(user_one: self.id) + Block.where(user_two: self.id)
+    matches = Match.where(first_user_interaction: self.id) + Match.where(user_two: self.id)
+    blocks = Block.where(first_user_interaction: self.id) + Block.where(user_two: self.id)
     matches_token_array = Array.new
     matches.each { |match|
-      if(match.user_one.id != self.id)
+      if(match.first_user_interaction.id != self.id)
         if(!blocks.empty?)
           blocks.each { |block|
-            if(match.user_one.id != block.user_one.id &&match.user_one.id != block.user_two.id)
+            if(match.first_user_interaction.id != block.first_user_interaction.id &&match.first_user_interaction.id != block.user_two.id)
               matches_token_array << match
+            else
+              # do nothing
             end
           }
         else
@@ -195,8 +207,10 @@ class User < ActiveRecord::Base
       elsif (match.user_two.id != self.id)
         if(!blocks.empty?)
           blocks.each { |block|
-            if(match.user_two.id != block.user_one.id && match.user_one.id != block.user_two.id)
+            if(match.user_two.id != block.first_user_interaction.id && match.first_user_interaction.id != block.user_two.id)
               matches_token_array << match.user_two
+            else
+              # do nothing
             end
           }
         else
@@ -208,12 +222,14 @@ class User < ActiveRecord::Base
   end
 
   def matched?(user)
-    matches = Match.where(user_one: self.id) + Match.where(user_two: self.id)
+    matches = Match.where(first_user_interaction: self.id) + Match.where(user_two: self.id)
     matches.each { |match|
-      if(match.user_one.id == user.id)
+      if(match.first_user_interaction.id == user.id)
         return true
       elsif (match.user_two.id == user.id)
         return true
+      else
+        # do nothing
       end
     }
     return false

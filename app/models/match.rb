@@ -1,8 +1,8 @@
 class Match < ActiveRecord::Base
-  belongs_to :user_one, class_name: 'User', foreign_key: :user_one_id
+  belongs_to :first_user_interaction, class_name: 'User', foreign_key: :first_user_interaction_id
   belongs_to :user_two, class_name: 'User', foreign_key: :user_two_id
 
-  validates :user_one_id, uniqueness: {scope: :user_two_id, message: "cant interact twice with the same user"}
+  validates :first_user_interaction_id, uniqueness: {scope: :user_two_id, message: "cant interact twice with the same user"}
   before_create { generate_token(:token) }
 
   private
@@ -14,10 +14,10 @@ class Match < ActiveRecord::Base
 
   private
     def get_user(id)
-      if self.user_one_id == id
+      if self.first_user_interaction_id == id
         return self.user_two
       else
-        return self.user_one
+        return self.first_user_interaction
       end
     end
 end
