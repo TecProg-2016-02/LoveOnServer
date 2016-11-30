@@ -7,7 +7,7 @@ class BlocksController < ApplicationController
     if block.save
       render json: block
     else
-      
+      # do nothing
     end
   end
 

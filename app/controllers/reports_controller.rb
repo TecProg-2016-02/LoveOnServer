@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
     if report.save
       render json: report
     else
-     
+      # do nothing
     end
   end
 
