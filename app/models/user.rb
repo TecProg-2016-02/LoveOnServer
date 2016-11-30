@@ -55,18 +55,18 @@ class User < ActiveRecord::Base
   end
 
 
-  def follow(other_user)
-    active_relationships.create(followed_id: other_user.id)
+  def follow(user_followed)
+    active_relationships.create(followed_id: user_followed.id)
   end
 
   # Unfollows a user.
-  def unfollow(other_user)
-    active_relationships.find_by(followed_id: other_user.id).destroy
+  def unfollow(user_followed)
+    active_relationships.find_by(followed_id: user_followed.id).destroy
   end
 
   # Returns true if the current user is following the other user.
-  def following?(other_user)
-    following.include?(other_user)
+  def following?(follower_user)
+    following.include?(follower_user)
   end
 
   def user_follows
@@ -143,8 +143,8 @@ class User < ActiveRecord::Base
     blocked_array
   end
 
-  def blocked?(other_user)
-    blocks.include?(other_user)
+  def blocked?(blocked_user)
+    blocks.include?(blocked_user)
   end
 
   def matches
