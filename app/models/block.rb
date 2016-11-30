@@ -12,6 +12,8 @@ class Block < ActiveRecord::Base
   def cant_block_myself
     if self.first_user_interaction.id == self.user_two.id
       errors.add(:expiration_date, "can't block myself")
+    else 
+      
     end
   end
 end
