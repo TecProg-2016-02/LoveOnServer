@@ -11,12 +11,13 @@ class Place < ActiveRecord::Base
 
   private
 
+  # This part will show if a place is not repeated
   def not_repeated
-    places = Place.where(:location_id=>self.location_id)
+    places = Place.where(:location_id => self.location_id)
     places.each {|place|
       if self.location_id == place.location_id
         place.delete
-      else 
+      else
         # do nothing
       end
     }
