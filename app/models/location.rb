@@ -12,23 +12,29 @@ class Location < ActiveRecord::Base
                    :lng_column_name => :longitude
 
   private
+    # This part will generate a location token while the user exists
     def generate_token(column)
       begin
         self[column] = SecureRandom.urlsafe_base64
-      end while User.exists?(column => self[column])
+      end
+
+      while User.exists?(column => self[column])
     end
 
   private
+    # This part show male people, according to age
     def male_users(age)
       self.users.where(:gender => 'male').where(["age <= ?", age])
     end
 
   private
+    # This part show female people, according to age
     def female_users(age)
       self.users.where(:gender => 'female').where(["age <= ?", age])
     end
 
   private
+    # This part will show all users
     def all_users(age)
       self.users.where(:gender => 'female').where(["age <= ?", age])
     end
